@@ -79,7 +79,7 @@ def main():
 
             context = "\n\n".join([doc.page_content for doc in relevant_docs])
 
-            prompt = f"""You are a helpful AI assistant. Use the following context to help you answer the question.
+            prompt = f"""You are a helpful AI assistant. Use the following context to help you answer the question if the context doesn't help then use your own knowledge.
 
             Context:
             {context}
