@@ -5,26 +5,12 @@ import chromadb
 from langchain_chroma import Chroma
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
-from ingest import setup_chroma_database, collection_name
+from set_up import setup_database, collection_name
 
 
 load_dotenv()
 
-
-# ---------------------------------------------------------------------
-# RAG Chatbot Setup
-# ---------------------------------------------------------------------
 def setup_rag_chatbot() -> Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, GoogleGenerativeAIEmbeddings]:
-    """Initialize the RAG chatbot with Google Generative AI and ChromaDB Cloud.
-
-    Loads environment variables, authenticates with Google API, and connects to ChromaDB Cloud.
-
-    Returns:
-        Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, GoogleGenerativeAIEmbeddings]:
-            - llm: Google Gemini LLM instance
-            - client: ChromaDB Cloud client
-            - embeddings: Google Generative AI embedding function
-    """
     try:
         llm = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash",
@@ -32,7 +18,7 @@ def setup_rag_chatbot() -> Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, Goo
             api_key=os.environ["GOOGLE_API_KEY"]
             )
 
-        client, embeddings = setup_chroma_database()
+        client, embeddings = setup_database()
 
         return llm, client, embeddings
 
@@ -43,13 +29,12 @@ def setup_rag_chatbot() -> Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, Goo
 
 def main():
     print("-" * 60)
-    print("RAG Chatbot - Ask questions about your documents!")
+    print("KAIRO")
     print("-" * 60)
     print()
 
     try:
         llm, client, embeddings = setup_rag_chatbot()
-        print("Chatbot Ready!")
     except Exception as e:
         print(f"An error occurred: {e}")
         return
@@ -74,12 +59,11 @@ def main():
                 )
 
             query = user_input
-
             relevant_docs = retriever.invoke(query)
-
             context = "\n\n".join([doc.page_content for doc in relevant_docs])
 
-            prompt = f"""You are a helpful AI assistant. Use the following context to help you answer the question if the context doesn't help then use your own knowledge.
+            prompt = f"""You are a helpful AI assistant. Use the following context to answer the question below if it is 
+            relevant. If not use your own knowledge. 
 
             Context:
             {context}

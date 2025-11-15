@@ -1,1 +1,0 @@
-Hi my name is Bernard and I am your Personal AI assistant. I'm built with long chain and gemini! As of now I'm only able to analyze text documents.
