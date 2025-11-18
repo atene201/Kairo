@@ -10,6 +10,7 @@ from set_up import setup_database, collection_name
 
 load_dotenv()
 
+# API set up
 def setup_rag_chatbot() -> Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, GoogleGenerativeAIEmbeddings]:
     try:
         llm = ChatGoogleGenerativeAI(
