@@ -27,7 +27,7 @@ def setup_rag_chatbot() -> Tuple[ChatGoogleGenerativeAI, chromadb.ClientAPI, Goo
         print(f"Error initializing RAG chatbot: {e}")
         raise
 
-
+# Test
 def main():
     print("-" * 60)
     print("KAIRO")
